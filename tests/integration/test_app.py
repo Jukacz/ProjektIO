@@ -36,7 +36,6 @@ def test_app_has_users_patch_endpoint() -> None:
 
 
 def test_app_has_users_delete_endpoint() -> None:
-    payload = {"id": 2}
     client = app.test_client()
-    response = client.delete(path="/users_delete/2", json=payload)
+    response = client.delete(path="/users_delete/2")
     assert response.status_code == 200

@@ -24,15 +24,17 @@ def test_create_user_returns_user() -> None:
 
 def test_users_put_returns_id() -> None:
     payload = {"id": 1}
-    with app.test_request_context(method="PUT", path="/users_put", json=payload):
+    id = 1
+    with app.test_request_context(method="PUT", path=f"/users_put/{id}", json=payload):
         result = users_put()
     assert result.json == payload and result.status_code == OK
 
 
 def test_users_patch_returns_id() -> None:
     payload = {"id": 1}
-    with app.test_request_context(method="PATCH", path="/users_patch", json=payload):
-        result = users_patch()
+    id = 1
+    with app.test_request_context(method="PATCH", path=f'/users_patch/{id}', json=payload):
+        result = users_patch(id)
     assert result.json == payload and result.status_code == OK
 
 
