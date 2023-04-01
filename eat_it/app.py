@@ -1,6 +1,6 @@
 from flask import Flask, Response, request, jsonify
 from repesitories import UserRepository
-from controllers import AddUserController, GetUserController, AddUserRequest, GetUsersRequest, PutUserController, PutUserRequest
+from controllers import AddUserController, GetUserController, AddUserRequest, GetUsersRequest, PutUserController, PutUserRequest, PatchUserController, PatchUserRequest, DeleteUserController, DeleteUserRequest
 app = Flask(__name__)
 
 
@@ -51,9 +51,24 @@ def users_put(id) -> Response:
 @app.patch("/users_patch/<id>")
 def users_patch(id) -> Response:
     user = request.json
+    repesitory = UserRepository()
+    controller = PatchUserController(repesitory=repesitory)
+    try:
+        patch_user_request = PatchUserRequest(user=request.json)
+        controller.patch(request=patch_user_request)
+    except NotImplementedError:
+        pass
     return jsonify(user)
 
 
 @app.delete("/users_delete/<id>")
 def users_delete(id) -> Response:
+    repesitory = UserRepository()
+    controller = DeleteUserController(repesitory=repesitory)
+    try:
+        delete_user_request = DeleteUserRequest(id=id)
+        controller.delete(request=delete_user_request)
+    except NotImplementedError:
+        pass
+
     return Response(status=204)
