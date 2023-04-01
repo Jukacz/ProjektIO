@@ -15,9 +15,9 @@ def tese_users_get_returns_501_response() -> None:
     assert result.status_code == UNIMPLEMENTED
 
 
-def test_create_user_returns_user() -> None:
+def test_create_user_returns_user():
     payload = {"first_name": "Jan", "last_name": "Kowalski"}
-    with app.test_request_context(method="POST", path="/users", json=payload):
+    with app.test_request_context(method="POST", path="/users_post", json=payload):
         result = users_post()
     assert result.json == payload and result.status_code == 201
 
@@ -25,8 +25,8 @@ def test_create_user_returns_user() -> None:
 def test_users_put_returns_id() -> None:
     payload = {"id": 1}
     id = 1
-    with app.test_request_context(method="PUT", path=f"/users_put/{id}", json=payload):
-        result = users_put()
+    with app.test_request_context(method="PUT", path=f"/    users_put/{id}", json=payload):
+        result = users_put(id)
     assert result.json == payload and result.status_code == OK
 
 
