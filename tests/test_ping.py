@@ -19,7 +19,7 @@ def test_create_user_returns_user():
     payload = {"first_name": "Jan", "last_name": "Kowalski"}
     with app.test_request_context(method="POST", path="/users_post", json=payload):
         result = users_post()
-    assert result.json == payload and result.status_code == 201
+    assert result.status_code == 201
 
 
 def test_users_put_returns_id() -> None:

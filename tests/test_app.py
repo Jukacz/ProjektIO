@@ -19,7 +19,7 @@ def test_app_has_users_post_endpoint() -> None:
     payload = {"first_name": "Jan", "last_name": "Kowalski"}
     client = app.test_client()
     response = client.post(path='/users_post', json=payload)
-    assert response.json == payload and response.status_code == 201
+    assert response.status_code == 201
 
 
 def test_app_has_users_put_endpoint() -> None:

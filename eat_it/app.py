@@ -1,6 +1,6 @@
 from flask import Flask, Response, request, jsonify
-from repesitories import UserRepository
-from controllers import AddUserController, GetUserController, AddUserRequest, GetUsersRequest, PutUserController, PutUserRequest, PatchUserController, PatchUserRequest, DeleteUserController, DeleteUserRequest
+from .repesitories import UserRepository
+from .controllers import AddUserController, GetUserController, AddUserRequest, GetUsersRequest, PutUserController, PutUserRequest, PatchUserController, PatchUserRequest, DeleteUserController, DeleteUserRequest
 app = Flask(__name__)
 
 
@@ -12,7 +12,7 @@ def ping():
 @app.get("/users_get")
 def users_get() -> Response:
     repesitory = UserRepository()
-    controller = GetUserController(repesitory=repesitory)
+    controller = GetUserController(repository=repesitory)
     try:
         add_user_request = GetUsersRequest()
         controller.get(request=add_user_request)
@@ -25,7 +25,7 @@ def users_get() -> Response:
 def users_post() -> Response:
     user = request.json
     repesitory = UserRepository()
-    controller = AddUserController(repesitory=repesitory)
+    controller = AddUserController(repository=repesitory)
     try:
         add_user_request = AddUserRequest(user=user)
         controller.add(request=add_user_request)
@@ -38,7 +38,7 @@ def users_post() -> Response:
 def users_put(id) -> Response:
     user = request.json
     repesitory = UserRepository()
-    controller = PutUserController(repesitory=repesitory)
+    controller = PutUserController(repository=repesitory)
 
     try:
         put_user_request = PutUserRequest(user=user)
@@ -52,7 +52,7 @@ def users_put(id) -> Response:
 def users_patch(id) -> Response:
     user = request.json
     repesitory = UserRepository()
-    controller = PatchUserController(repesitory=repesitory)
+    controller = PatchUserController(repository=repesitory)
     try:
         patch_user_request = PatchUserRequest(user=request.json)
         controller.patch(request=patch_user_request)
@@ -64,9 +64,9 @@ def users_patch(id) -> Response:
 @app.delete("/users_delete/<id>")
 def users_delete(id) -> Response:
     repesitory = UserRepository()
-    controller = DeleteUserController(repesitory=repesitory)
+    controller = DeleteUserController(repository=repesitory)
     try:
-        delete_user_request = DeleteUserRequest(id=id)
+        delete_user_request = DeleteUserRequest(user_id=id)
         controller.delete(request=delete_user_request)
     except NotImplementedError:
         pass
