@@ -91,12 +91,12 @@ def test_user_post_view_is_subclasS_method_view(addView: UserAddView) -> None:
 
 
 def test_user_put_view_return_response_on_put_method(putView: UserPutView) -> None:
-    result = putView.put()
+    result = putView.put(id=1)
     assert isinstance(result, Response)
 
 
 def test_user_put_view_returns_501_response(putView: UserPutView) -> None:
-    result = putView.put()
+    result = putView.put(id=2)
     assert result.status_code == 501
 
 
@@ -105,12 +105,12 @@ def test_user_put_view_is_subclasS_method_view(putView: UserPutView) -> None:
 
 
 def test_user_patch_view_return_response_on_patch_method(patchView: UserPatchView) -> None:
-    result = patchView.patch()
+    result = patchView.patch(id=2)
     assert isinstance(result, Response)
 
 
 def test_user_patch_view_returns_501_response(patchView: UserPatchView) -> None:
-    result = patchView.patch()
+    result = patchView.patch(id=2)
     assert result.status_code == 501
 
 
@@ -119,13 +119,13 @@ def test_user_patch_view_is_subclasS_method_view(patchView: UserPatchView) -> No
 
 
 def test_user_delete_view_return_response_on_delete_method(deleteView: UserDeleteView) -> None:
-    result = deleteView.delete()
+    result = deleteView.delete(id=2)
     assert isinstance(result, Response)
 
 
-def test_user_delete_view_returns_501_response(deleteView: UserDeleteView) -> None:
-    result = deleteView.delete()
-    assert result.status_code == 501
+def test_user_delete_view_returns_204_response(deleteView: UserDeleteView) -> None:
+    result = deleteView.delete(id=2)
+    assert result.status_code == 204
 
 
 def test_user_delete_view_is_subclasS_method_view(deleteView: UserDeleteView) -> None:

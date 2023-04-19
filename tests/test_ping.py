@@ -1,5 +1,6 @@
 from eat_it.app import UserView, UserAddView, UserPutView, UserPatchView, UserDeleteView, app
 from eat_it.app import GetUserController, AddUserController, PutUserController, PatchUserController, DeleteUserController
+from eat_it.repesitories import UserRepository
 
 UNIMPLEMENTED = 501
 OK = 200
@@ -14,7 +15,8 @@ def tese_users_get_returns_501_response() -> None:
 def test_create_user_returns_user():
     payload = {"first_name": "Jan", "last_name": "Kowalski"}
     with app.test_request_context(method="POST", path="/users_post", json=payload):
-        result = UserAddView(controller=AddUserController()).post()
+        result = UserAddView(controller=AddUserController(
+            repository=UserRepository)).post()
     assert result.status_code == 201
 
 
@@ -22,7 +24,8 @@ def test_users_put_returns_id() -> None:
     payload = {"id": 1}
     id = 1
     with app.test_request_context(method="PUT", path=f"/users_put/{id}", json=payload):
-        result = UserPutView(controller=PutUserController()).put(id=id)
+        result = UserPutView(controller=PutUserController(
+            repository=UserRepository)).put(id=id)
     assert result.json == payload and result.status_code == OK
 
 
@@ -30,7 +33,8 @@ def test_users_patch_returns_id() -> None:
     payload = {"id": 1}
     id = 1
     with app.test_request_context(method="PATCH", path=f'/users_patch/{id}', json=payload):
-        result = UserPatchView(controller=PatchUserController()).patch(id=id)
+        result = UserPatchView(controller=PatchUserController(
+            repository=UserRepository)).patch(id=id)
     assert result.json == payload and result.status_code == OK
 
 
@@ -38,5 +42,5 @@ def test_users_delete_returns_id() -> None:
     id = 2
     with app.test_request_context(method="DELETE", path=f"/users_delete/{id}"):
         result = UserDeleteView(
-            controller=DeleteUserController()).delete(id=id)
+            controller=DeleteUserController(repository=UserRepository)).delete(id=id)
     assert result.status_code == 204
