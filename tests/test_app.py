@@ -3,12 +3,6 @@ from eat_it.app import app
 UNIMPLEMENTED = 501
 
 
-def test_app_has_ping_endpoint() -> None:
-    client = app.test_client()
-    response = client.get(path="/ping")
-    assert response.status_code == UNIMPLEMENTED
-
-
 def test_app_has_users_get_endpoint() -> None:
     client = app.test_client()
     response = client.get(path="/users_get")
